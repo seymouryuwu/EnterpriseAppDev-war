@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import dto.CustomerDTO;
 import mbeans.CustomerManagedBean;
 import repository.entity.Customer;
+import repository.entity.IndustryType;
 import repository.entity.User;
 
 @RequestScoped
@@ -23,36 +24,22 @@ public class CustomerController {
 	private CustomerManagedBean customerManagedBean;
 
 	private ArrayList<Customer> customers = new ArrayList<>();
-	// private long customerIndex;
+
 	private Customer customer = new Customer();
 	private CustomerDTO customerDTO = new CustomerDTO();
 
 	private String searchCustomerId = null;
 
-	// private ContactApplication contactApp;
-	// ContactController contactCtrl;
 
-	// private CustomerApplication customerApp;
 
 	public CustomerController() {
 		ELContext elContext = FacesContext.getCurrentInstance().getELContext();
 
-		// customerApp = (CustomerApplication)
-		// FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext,
-		// null, "customerApplication");
-		// customerDTO = (CustomerDTO)
-		// FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext,
-		// null, "customer");
+	
 		customerManagedBean = (CustomerManagedBean) FacesContext.getCurrentInstance().getApplication().getELResolver()
 				.getValue(elContext, null, "customerManagedBean");
 
-		// contactApp = (ContactApplication)
-		// FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext,
-		// null, "contactApplication");
-		// to see
-		// contactCtrl = (ContactController)
-		// FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext,
-		// null, "contactController");
+	
 
 		updateCustomerList();
 
@@ -97,6 +84,14 @@ public class CustomerController {
 	public void searchCustomerByUser(User user) {
 		customers.clear();
 		for (Customer customer : customerManagedBean.getCustomersByUser(user)) {
+			customers.add(customer);
+		}
+		setCustomers(customers);
+	}
+	
+	public void searchCustomerByIndustry(IndustryType industryType) {
+		customers.clear();
+		for (Customer customer : customerManagedBean.getCustomersByIndustry(industryType)) {
 			customers.add(customer);
 		}
 		setCustomers(customers);
@@ -154,17 +149,7 @@ public class CustomerController {
 		}
 	}
 
-	/*
-	 * public String viewCustomerDetails() { contactApp.updateContactList(customer);
-	 * 
-	 * return "details.xhtml"; }
-	 */
-
-	/*
-	 * public String editCustomer() {
-	 * customerDTO.setCustomerDTO(customerManagedBean.convertCustomerToDTO(customer)
-	 * ); return "edit.xhtml"; }
-	 */
+	
 
 	public void updateCustomer(CustomerDTO customerDTO) {
 		try {

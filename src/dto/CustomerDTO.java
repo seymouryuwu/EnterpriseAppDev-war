@@ -8,8 +8,7 @@ import repository.entity.Contact;
 import repository.entity.IndustryType;
 import repository.entity.User;
 
-//@RequestScoped
-//@Named(value = "customer")
+
 public class CustomerDTO {
 	private long customerId;
 	private String customerName;

@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+	<title>Add Industry Type Page</title>
+</h:head>
+<h:body>
+	<div class="container">
+		<div class="navbar navbar-inverse">
+			<div class="navbar-brand">Add Industry Type</div>
+		</div>
+		<div>
+			<f:view>
+				<h:form>
+					<h1>
+						<h:outputText value="Create" />
+					</h1>
+
+					<table class="table table-bordered ">
+						<tr>
+							<td><h:outputLabel value="Industry Type" for="industryType" /></td>
+							<td><h:inputText id="industryType"
+									value="#{industryTypeController.newIndustryType}"
+									title="IndustryType" required="true"
+									requiredMessage="Please enter the industry type">
+
+								</h:inputText> <br /> <h:message for="customerName"
+									class="#{!industryType.valid ? 'label label-warning' : 'none'}" />
+							</td>
+						</tr>
+
+						
+					</table>
+
+					<h:commandButton id="submit" value="Submit"
+						action="#{industryTypeController.addIndustryType(industryTypeController.newIndustryType)}"
+						class="btn btn-primary">
+					</h:commandButton>
+
+					<h:outputText value=" " />
+
+					<h:link id="close" value="Close" outcome="/admin/industrylist.xhtml"
+						class="btn btn-primary" />
+
+				</h:form>
+			</f:view>
+		</div>
+	</div>
+
+</h:body>
+</html>

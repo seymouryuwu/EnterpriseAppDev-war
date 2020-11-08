@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+	<title>Update Industry Type</title>
+</h:head>
+<h:body>
+	<div class="navbar navbar-inverse">
+		<div class="navbar-brand">Update Industry Type with Id:
+			#{industryTypeController.industryType.industryTypeId}</div>
+	</div>
+	<h:form>
+		<h:panelGrid columns="2">
+			<h:outputLabel value="Old Industry Type Name  " for="oldrname"></h:outputLabel>
+			<h:outputLabel id="oldrname"
+				value="#{industryTypeController.industryType.industryType}"></h:outputLabel>
+
+
+			<h:outputLabel value="New Industry Type Name  " for="newname"></h:outputLabel>
+			<h:inputText id="newname"
+				value="#{industryTypeController.newIndustryType}" required="true"
+				requiredMessage="Please enter industry type">
+			</h:inputText>
+		</h:panelGrid>
+		<div>
+			<h:commandButton
+				action="#{industryTypeController.updateIndustryType(industryTypeController.newIndustryType)}"
+				value="Submit" class="btn btn-primary">
+				<f:param name="industryTypeId"
+					value="#{industryTypeController.industryType.industryTypeId}" />
+			</h:commandButton>
+
+
+			<h:outputText value=" " />
+			<h:link id="close" value="Close" outcome="/admin/industrylist.xhtml"
+				class="btn btn-primary">
+
+			</h:link>
+		</div>
+
+	</h:form>
+
+</h:body>
+</html>

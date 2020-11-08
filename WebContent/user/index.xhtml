@@ -102,6 +102,11 @@
 					disabled="#{not loginManagedBean.isAdmin()}"
 					class="btn btn-primary" />
 				<h:outputText value=" "/>
+				
+				<h:commandButton id="manageIndustryType" value="Manage Industry Type" action="/admin/industrylist.xhtml"
+					disabled="#{not loginManagedBean.isAdmin()}"
+					class="btn btn-primary" />
+				<h:outputText value=" "/>
 			</div>
 			<br/>
 			<div>

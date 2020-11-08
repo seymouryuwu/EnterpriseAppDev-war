@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+	<title>Industry Type List</title>
+</h:head>
+<h:body>
+	<div class="container">
+		<div class="navbar navbar-inverse">
+			<div class="navbar-brand">Industry Type List</div>
+		</div>
+		<div>
+			<f:view>
+				<h:form>
+
+					<table class="table table-bordered table-striped">
+
+						<tr>
+
+
+							<td><h:outputLabel id="IndustryTypeId"
+									value="Industry Type Id" /></td>
+
+							<td><h:outputLabel id="IndustryTypeName"
+									value="Industry Type Name" /></td>
+
+							<td><h:outputLabel id="Actions" value="Actions" /></td>
+						</tr>
+
+						<ui:repeat id="Myrepeat"
+							value="#{industryTypeApplication.industryTypeList}" var="user"
+							varStatus="status">
+							<tr
+								onclick="document.getElementById('MyForm:principle').value = document.getElementById('MyForm:Myrepeat:#{status.index}:outPrice').textContent">
+								<td><h:outputText id="industryTypeId"
+										value="#{industryTypeApplication.industryTypeList.get(status.index).industryTypeId}" />
+								</td>
+
+								<td><h:outputText id="industryTypeName"
+										value="#{industryTypeApplication.industryTypeList.get(status.index).industryType}" />
+								</td>
+
+								<td><h:outputText value=" " /> <h:commandButton
+										id="updateIndustryType" value="Update"
+										action="/admin/updateindustrytype.xhtml"
+										disabled="#{industryTypeApplication.industryTypeList.get(status.index).industryTypeId == null}"
+										class="btn btn-primary">
+										<f:param name="industryTypeId"
+											value="#{industryTypeApplication.industryTypeList.get(status.index).industryTypeId}" />
+									</h:commandButton> <h:outputText value=" " /> <h:commandButton
+										id="deleteIndustryType" value="Delete"
+										action="#{industryTypeController.confirmRemoveIndustryType(industryTypeApplication.industryTypeList.get(status.index).industryType)}"
+										disabled="#{industryTypeApplication.industryTypeList.get(status.index).industryType == null}"
+										class="btn btn-primary">
+										<f:param name="industryTypeId"
+											value="#{industryTypeApplication.industryTypeList.get(status.index).industryTypeId}" />
+									</h:commandButton> <h:outputText value=" " /></td>
+							</tr>
+						</ui:repeat>
+					</table>
+
+					<h:commandButton id="add" value="Add Industry Type"
+						action="/admin/addindustry.xhtml" class="btn btn-primary" />
+
+					<h:outputText value=" " />
+
+					<h:link id="close" value="Close" outcome="/user/index.xhtml"
+						class="btn btn-primary">
+
+					</h:link>
+
+				</h:form>
+			</f:view>
+		</div>
+	</div>
+</h:body>
+</html>

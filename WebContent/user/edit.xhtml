@@ -41,13 +41,12 @@
 
 				<tr>
 					<td><h:outputLabel value="Industry Type" for="industryType" /></td>
-					<td><h:inputText id="industryType"
-							value="#{customerController.customerDTO.industryType}"
-							title="IndustryType" required="true"
-							requiredMessage="Please enter the industry type">
-
-						</h:inputText> <br /> <h:message for="industryType"
-							class="#{!industryType.valid ? 'label label-warning' : 'none'}" />
+					
+					<td><h:selectOneMenu
+							value="#{customerController.customerDTO.industryType}">
+							<f:selectItems
+								value="#{industryTypeApplication.industryTypeNameList}" />
+						</h:selectOneMenu>
 					</td>
 				</tr>
 
@@ -107,11 +106,10 @@
 						</h:inputText> <br /> <h:message for="postcode"
 							class="#{!postcode.valid ? 'label label-warning' : 'none'}" /></td>
 				</tr>
-				
+
 				<tr>
-					<td><h:outputLabel
-							value="Connect User" for="connectUser" /></td>
-					<td ><h:outputLabel id="connectUser"
+					<td><h:outputLabel value="Connect User" for="connectUser" /></td>
+					<td><h:outputLabel id="connectUser"
 							value="#{customerController.customer.connectUser.username}">
 						</h:outputLabel></td>
 				</tr>
@@ -192,13 +190,12 @@
 				<f:param name="customerId"
 					value="#{customerController.customer.customerId}" />
 			</h:commandButton>
-			
+
 			<h:outputText value=" " />
 
 			<h:commandButton id="assignUser" value="Assign Connect User"
-				action="/admin/assignuser.xhtml" 
-				disabled="#{not loginManagedBean.isAdmin()}"
-				class="btn btn-primary">
+				action="/admin/assignuser.xhtml"
+				disabled="#{not loginManagedBean.isAdmin()}" class="btn btn-primary">
 				<f:param name="customerId"
 					value="#{customerController.customer.customerId}" />
 			</h:commandButton>

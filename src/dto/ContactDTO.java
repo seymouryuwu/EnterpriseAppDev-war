@@ -3,8 +3,7 @@ package dto;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-//@RequestScoped
-//@Named(value = "contact")
+
 public class ContactDTO {
 	private long contactId;
 	private String contactName;

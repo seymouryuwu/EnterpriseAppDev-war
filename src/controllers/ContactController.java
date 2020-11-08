@@ -25,11 +25,7 @@ public class ContactController {
 	private CustomerController customerCtrl;
 	
 	private ArrayList<Contact> contacts = new ArrayList<>();
-	//private Customer customer;
-	
-	//private ContactApplication contactApp;
-	
-	//private long contactIndex;
+
 	private Contact contact = new Contact();
 	private ContactDTO contactDTO = new ContactDTO();
 	private String searchContactId= null;
@@ -41,8 +37,7 @@ public class ContactController {
 		
 		customerCtrl = (CustomerController) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext, null, "customerController");
 		
-		//contactApp = (ContactApplication) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext, null, "contactApplication");
-		//customer = contactApp.getCustomer();
+	
 		
 		updateContactList(customerCtrl.getCustomer());
 		
@@ -64,7 +59,7 @@ public class ContactController {
 
 	public void updateContactList(Customer customer) {
 		if (customer != null) {
-			//this.customer = customer;
+		
 			contacts.clear();
 			for (Contact contact : contactManagedBean.getContactsByCustomer(customer)) {
 				contacts.add(contact);
@@ -102,15 +97,6 @@ public class ContactController {
 		return false;
 	}
 	
-	/*
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-	*/
 
 	public Contact getContact() {
 		return contact;
@@ -150,12 +136,7 @@ public class ContactController {
 		}
 	}
 	
-	/*
-	public String loadAddContactPage(Customer customer) {
-		this.customer = customer;
-		return "addcontact.xhtml";
-	}
-	*/
+
 
 	public void updateContact(ContactDTO contactDTO) {
 		try {

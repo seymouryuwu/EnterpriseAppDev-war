@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<title>Confirm Remove Industry Type</title>
+</h:head>
+
+<h:body>
+	<div class="container">
+		<div class="navbar navbar-inverse">
+			<div class="navbar-brand">Confirm Industry Type:
+				#{industryTypeController.industryType.industryType}</div>
+		</div>
+
+		<h:form id="MyIndexForm">
+			<h1>
+				<h:outputText value="Please Confirm" />
+			</h1>
+			<h:outputText
+				value="Industry Type #{industryTypeController.industryType.industryType} has following customers. Are you sure to remove?" />
+			<br />
+			<h:commandButton id="remove" value="Remove"
+				action="#{industryTypeController.removeIndustryType(industryTypeController.industryType.industryType)}"
+				class="btn btn-primary">
+				<f:param name="industryTypeId" value="#{industryTypeController.industryType.industryTypeId}"/>
+			</h:commandButton>
+			<h:outputText value=" " />
+			<h:link id="close" value="Close" outcome="/admin/industrylist.xhtml"
+				class="btn btn-primary">
+
+			</h:link>
+
+
+			<table class="table table-bordered table-striped">
+
+				<tr>
+					<td><h:outputLabel id="Id" value="Id" /></td>
+
+					<td><h:outputLabel id="Name" value="Name" /></td>
+
+					<td><h:outputLabel id="IndustryType" value="Industry Type" /></td>
+
+					<td><h:outputLabel id="Address" value="Address" /></td>
+
+					<td><h:outputLabel id="ConnectUser" value="Connect User" /></td>
+
+					
+				</tr>
+
+				<ui:repeat id="Myrepeat" value="#{customerController.customers}"
+					var="customer" varStatus="status">
+					<tr
+						onclick="document.getElementById('MyForm:principle').value = document.getElementById('MyForm:Myrepeat:#{status.index}:outPrice').textContent">
+						<td><h:outputText id="customerId"
+								value="#{customerController.customers.get(status.index).customerId}" />
+						</td>
+
+						<td><h:outputText id="customerName"
+								value="#{customerController.customers.get(status.index).customerName}" />
+						</td>
+
+						<td><h:outputText id="customerIndustryType"
+								value="#{customerController.customers.get(status.index).industryType.toString()}" />
+						</td>
+
+						<td><h:outputText id="address"
+								value="#{customerController.customers.get(status.index).address.toString()}" />
+						</td>
+
+						<td><h:outputText id="connectUser"
+								value="#{customerController.customers.get(status.index).connectUser.username}" />
+						</td>
+
+						
+					</tr>
+				</ui:repeat>
+			</table>
+
+			
+
+		</h:form>
+	</div>
+</h:body>
+
+</html>

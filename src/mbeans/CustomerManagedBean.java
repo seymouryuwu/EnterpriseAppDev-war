@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 
 import repository.ContactRepository;
 import repository.CustomerRepository;
+import repository.IndustryTypeRepository;
 import repository.entity.Address;
 import repository.entity.Contact;
 import repository.entity.Customer;
@@ -32,6 +33,9 @@ public class CustomerManagedBean {
 	@EJB
 	private ContactRepository contactRepository;
 	
+	@EJB
+	private IndustryTypeRepository industryTypeRepository;
+	
 	public List<Customer> getAllCustomers() {
 		try {
             List<Customer> customers = customerRepository.findAllCustomers();
@@ -45,6 +49,16 @@ public class CustomerManagedBean {
 	public List<Customer> getCustomersByUser(User user) {
 		try {
 			List<Customer> customers = customerRepository.findCustomersByConnectUser(user);
+			return customers;
+		} catch (Exception ex) {
+			Logger.getLogger(CustomerRepository.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return null;
+	}
+	
+	public List<Customer> getCustomersByIndustry(IndustryType industryType) {
+		try {
+			List<Customer> customers = customerRepository.findCustomerByIndustryType(industryType);
 			return customers;
 		} catch (Exception ex) {
 			Logger.getLogger(CustomerRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -72,7 +86,7 @@ public class CustomerManagedBean {
 		try {
             customerRepository.addCustomer(customer);
         } catch (Exception ex) {
-            Logger.getLogger(CustomerManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CustomerRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
 	}
 	
@@ -80,9 +94,12 @@ public class CustomerManagedBean {
 		Customer customer = new Customer();
 		
 		customer.setCustomerName(customerDTO.getCustomerName());
-		
-		IndustryType industryType = checkIndustryType(customerDTO.getIndustryType());
+		if (customerDTO.getIndustryType().equals("")) {
+			customer.setIndustryType(null );
+		} else {
+		IndustryType industryType = industryTypeRepository.findIndustryTypeByName(customerDTO.getIndustryType());
 		customer.setIndustryType(industryType );
+		}
 		
 		Address address = new Address();
 		address.setStreetNumber(customerDTO.getStreetNumber());
@@ -96,37 +113,7 @@ public class CustomerManagedBean {
 		return customer;
 	}
 	
-	public IndustryType checkIndustryType(String industry) {
-		IndustryType industryType = IndustryType.UNKNOWN;
-		
-		switch (industry) {
-		case "Bank" :
-			industryType = IndustryType.BANK;
-			break;
-		case "Building" :
-			industryType = IndustryType.BUILDING;
-			break;
-		case "Data Communication" :
-			industryType = IndustryType.DATACOMMUNICATION;
-			break;
-		case "Education" :
-			industryType = IndustryType.EDUCATION;
-			break;
-		case "Farm" :
-			industryType = IndustryType.FARM;
-			break;
-		case "Health" :
-			industryType = IndustryType.HEALTH;
-			break;
-		case "Mining" :
-			industryType = IndustryType.MINING;
-			break;
-		case "Publishing" :
-			industryType = IndustryType.PUBLISHING;
-			break;
-		}
-		return industryType;
-	}
+	
 	
 	public void removeCustomer(long customerId) {
 		try {
@@ -145,7 +132,12 @@ public class CustomerManagedBean {
 		CustomerDTO customerDTO = new CustomerDTO();
 		customerDTO.setCustomerId(customer.getCustomerId());
 		customerDTO.setCustomerName(customer.getCustomerName());
-		customerDTO.setIndustryType(customer.getIndustryType().toString());
+		if (customer.getIndustryType() == null) {
+			customerDTO.setIndustryType("");
+		} else {
+			customerDTO.setIndustryType(customer.getIndustryType().toString());
+		}
+		
 		customerDTO.setStreetNumber(customer.getAddress().getStreetNumber());
 		customerDTO.setStreetAddress(customer.getAddress().getStreetAddress());
 		customerDTO.setSuburb(customer.getAddress().getSuburb());

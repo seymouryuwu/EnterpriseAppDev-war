@@ -75,7 +75,7 @@ public class UserManagedBean {
 			
             userRepository.removeUser(username);
         } catch (Exception ex) {
-            Logger.getLogger(CustomerManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
 	}
  }

@@ -29,17 +29,7 @@ public class SearchController {
 		
 	}
 	
-	/*
-	public String searchByCustomerIdAndContactId(Customer searchCustomer, Contact searchContact) {
-		Customer customer = customerCtrl.searchCustomerById(searchCustomer.getCustomerId());
-		ELContext elContext = FacesContext.getCurrentInstance().getELContext();
-		ContactManagedBean contactManagedBean = (ContactManagedBean) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext, null, "contactManagedBean");
-		List<Contact> searchContactList = contactManagedBean.getContactsByCustomer(customer);
-		
-		
-		return "/user/details.xhtml";
-	}
-	*/
+	
 	
 	public void searchByCustomerId(String searchCustomerId) {
 		searchCustomerId = (searchCustomerId == null) ? "" : searchCustomerId;
