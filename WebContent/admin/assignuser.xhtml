@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+	<title>Assign User</title>
+</h:head>
+<h:body>
+	<div class="container">
+		<div class="navbar navbar-inverse">
+			<div class="navbar-brand">Assign Customer ID:
+				#{customerController.customer.customerId} Name:
+				#{customerController.customer.customerName} to a User</div>
+		</div>
+		<div>
+			<f:view>
+				<h:form>
+					<h1>
+						<h:outputText value="Please Select a User" />
+					</h1>
+
+					<table class="table table-bordered table-striped">
+
+						<tr>
+							
+
+							<td><h:outputLabel id="Username" value="Username" /></td>
+
+							<td><h:outputLabel id="Group" value="Group" /></td>
+
+							<td><h:outputLabel id="Select" value="Select" /></td>
+						</tr>
+
+						<ui:repeat id="Myrepeat" value="#{userController.users}"
+							var="user" varStatus="status">
+							<tr
+								onclick="document.getElementById('MyForm:principle').value = document.getElementById('MyForm:Myrepeat:#{status.index}:outPrice').textContent">
+								<td><h:outputText id="username"
+										value="#{userController.users.get(status.index).username}" />
+								</td>
+
+								<td><h:outputText id="userGroup"
+										value="#{userController.getUserGroup(userController.users.get(status.index).username)}" />
+								</td>
+
+								<td><h:commandButton id="select" value="Select"
+										action="#{userController.assignConnectUser()}"
+										class="btn btn-primary">
+										<f:param name="customerId"
+											value="#{customerController.customer.customerId}" />
+										<f:param name="username"
+											value="#{userController.users.get(status.index).username}" />
+									</h:commandButton> <h:outputText value=" " /> 
+									
+									
+								</td>
+							</tr>
+						</ui:repeat>
+					</table>
+
+
+					<h:outputText value=" " />
+
+					<h:link id="close" value="Close" outcome="/user/edit.xhtml"
+						class="btn btn-primary">
+						<f:param name="customerId"
+							value="#{customerController.customer.customerId}" />
+					</h:link>
+
+				</h:form>
+			</f:view>
+		</div>
+	</div>
+</h:body>
+</html>

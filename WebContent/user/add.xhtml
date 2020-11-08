@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+	<title>Add Customer Page</title>
+</h:head>
+<h:body>
+	<div class="container">
+		<div class="navbar navbar-inverse">
+			<div class="navbar-brand">Add Customer</div>
+		</div>
+		<div>
+			<f:view>
+				<h:form>
+					<h1>
+						<h:outputText value="Create" />
+					</h1>
+
+					<table class="table table-bordered ">
+						<tr>
+							<td><h:outputLabel value="Customer Name" for="customerName" /></td>
+							<td><h:inputText id="customerName"
+									value="#{customerController.customerDTO.customerName}" title="CustomerName"
+									required="true"
+									requiredMessage="Please enter the customer name">
+
+								</h:inputText> <br /> 
+								<h:message for="customerName"
+									class="#{!customerName.valid ? 'label label-warning' : 'none'}" />
+							</td>
+						</tr>
+
+						<tr>
+							<td><h:outputLabel value="Industry Type" for="industryType" /></td>
+							<td><h:inputText id="industryType"
+									value="#{customerController.customerDTO.industryType}" title="IndustryType"
+									required="true"
+									requiredMessage="Please enter the industry type">
+
+								</h:inputText> <br /> 
+								<h:message for="customerName"
+									class="#{!industryType.valid ? 'label label-warning' : 'none'}" />
+							</td>
+						</tr>
+
+						<tr class="#{!streetNumber.valid ? 'has-error' : 'none'}">
+							<td><h:outputLabel value="Street Number" for="streetNumber" /></td>
+							<td><h:inputText id="streetNumber"
+									value="#{customerController.customerDTO.streetNumber}" title="streetNumber"
+									required="true"
+									requiredMessage="Please enter the street number!"
+									validatorMessage="Please enter a street number greater than 1"
+									converterMessage="Please enter a number">
+									<f:convertNumber integerOnly="true" />
+									<f:validateLongRange minimum="1" />
+								</h:inputText> <br /> 
+								<h:message for="streetNumber"
+									class="#{!streetNumber.valid ? 'label label-warning' : 'none'}" />
+							</td>
+						</tr>
+
+						<tr class="#{!streetAddress.valid ? 'has-error' : 'none'}">
+							<td><h:outputLabel value="Street Address" for="streetAddress" /></td>
+							<td><h:inputText id="streetAddress"
+									value="#{customerController.customerDTO.streetAddress}" title="streetAddress"
+									required="true"
+									requiredMessage="Please enter the street address!" > 
+								</h:inputText> <br />
+								<h:message for="streetAddress"
+									class="#{!streetAddress.valid ? 'label label-warning' : 'none'}" />
+							</td>
+						</tr>
+
+						<tr class="#{!suburb.valid ? 'has-error' : 'none'}">
+							<td><h:outputLabel value="Suburb" for="suburb" /></td>
+							<td><h:inputText id="suburb" 
+									value="#{customerController.customerDTO.suburb}" title="suburb" 
+									required="true"
+									requiredMessage="Please enter the suburb!" >
+								</h:inputText> <br /> 
+								<h:message for="suburb"
+									class="#{!suburb.valid ? 'label label-warning' : 'none'}" />
+							</td>
+						</tr>
+
+						<tr class="#{!state.valid ? 'has-error' : 'none'}">
+							<td><h:outputLabel value="State" for="state" /></td>
+							<td><h:inputText id="state" 
+									value="#{customerController.customerDTO.state}" title="state" 
+									size="3" 
+									required="true"
+									requiredMessage="Please enter the state!" >
+								</h:inputText> <br /> 
+								<h:message for="state"
+									class="#{!state.valid ? 'label label-warning' : 'none'}" /></td>
+						</tr>
+						
+						<tr class="#{!postcode.valid ? 'has-error' : 'none'}">
+							<td><h:outputLabel value="Postcode" for="postcode" /></td>
+							<td><h:inputText id="postcode" 
+									value="#{customerController.customerDTO.postcode}"
+									title="postcode" 
+									required="true"
+									requiredMessage="Please enter the postcode!"
+									validatorMessage="Please enter a postcode between 0200 and 4700"
+									converterMessage="Please enter a number" >
+									<f:convertNumber integerOnly="true" />
+									<f:validateLongRange minimum="200" maximum="4700" />
+								</h:inputText> <br /> 
+								<h:message for="postcode"
+									class="#{!postcode.valid ? 'label label-warning' : 'none'}" />
+							</td>
+						</tr>
+
+					</table>
+
+					<h:commandButton id="submit" value="Submit"
+						action="#{customerController.addCustomer(customerController.customerDTO)}"
+						class="btn btn-primary">
+					</h:commandButton>
+					
+					<h:outputText value=" " />
+					
+					<h:link id="close" value="Close" outcome="/user/index.xhtml"
+						class="btn btn-primary" />
+
+				</h:form>
+			</f:view>
+		</div>
+	</div>
+
+</h:body>
+</html>

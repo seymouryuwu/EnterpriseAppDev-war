@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+	<title>Add Contact Page</title>
+</h:head>
+<h:body>
+	<div class="container">
+		<div class="navbar navbar-inverse">
+			<div class="navbar-brand">Add Contact for Customer ID: #{customerController.customer.customerId} Name: #{customerController.customer.customerName}</div>
+		</div>
+		<div>
+			<f:view>
+				<h:form>
+					<h1>
+						<h:outputText value="Create" />
+					</h1>
+
+					<table class="table table-bordered ">
+						<tr>
+							<td><h:outputLabel value="Contact Name" for="contactName" /></td>
+							<td><h:inputText id="contactName"
+									value="#{contactController.contactDTO.contactName}" title="ContactName"
+									required="true"
+									requiredMessage="Please enter the contact name">
+
+								</h:inputText> <br /> 
+								<h:message for="contactName"
+									class="#{!contactName.valid ? 'label label-warning' : 'none'}" />
+							</td>
+						</tr>
+
+						<tr>
+							<td><h:outputLabel value="Title" for="contactTitle" /></td>
+							<td><h:inputText id="contactTitle"
+									value="#{contactController.contactDTO.contactTitle}" title="ContactTitle"
+									required="true"
+									requiredMessage="Please enter the contact title">
+
+								</h:inputText> <br /> 
+								<h:message for="contactTitle"
+									class="#{!contactTitle.valid ? 'label label-warning' : 'none'}" />
+							</td>
+						</tr>
+
+						<tr class="#{!contactPhoneNumber.valid ? 'has-error' : 'none'}">
+							<td><h:outputLabel value="Phone Number" for="contactPhoneNumber" /></td>
+							<td><h:inputText id="contactPhoneNumber"
+									value="#{contactController.contactDTO.contactPhoneNumber}" title="contactPhoneNumber"
+									required="true"
+									requiredMessage="Please enter the phone number!"
+									converterMessage="Please enter a number">
+									<f:convertNumber integerOnly="true" />
+								</h:inputText> <br /> 
+								<h:message for="contactPhoneNumber"
+									class="#{!contactPhoneNumber.valid ? 'label label-warning' : 'none'}" />
+							</td>
+						</tr>
+
+						<tr class="#{!contactEmail.valid ? 'has-error' : 'none'}">
+							<td><h:outputLabel value="Email" for="contactEmail" /></td>
+							<td><h:inputText id="contactEmail"
+									value="#{contactController.contactDTO.contactEmail}" title="contactEmail"
+									required="true"
+									requiredMessage="Please enter the email!" > 
+									<f:validator validatorId="emailValidator" />
+								</h:inputText> <br />
+								<h:message for="contactEmail"
+									class="#{!contactEmail.valid ? 'label label-warning' : 'none'}" />
+							</td>
+						</tr>
+
+					</table>
+
+					<h:commandButton id="submit" value="Submit"
+						action="#{contactController.addContact(contactController.contactDTO)}"
+						class="btn btn-primary">
+						<f:param name="customerId" value="#{customerController.customer.customerId}"/>
+					</h:commandButton>
+					
+					<h:outputText value=" " /> 
+					
+					<h:link id="close" value="Close" outcome="/user/edit.xhtml"
+						class="btn btn-primary" >
+						<f:param name="customerId" value="#{customerController.customer.customerId}"/>
+					</h:link>
+
+				</h:form>
+			</f:view>
+		</div>
+	</div>
+
+</h:body>
+</html>

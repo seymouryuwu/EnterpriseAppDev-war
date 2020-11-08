@@ -1,0 +1,213 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<title>Edit Cumstomer</title>
+</h:head>
+
+<h:body>
+	<div class="container">
+		<div class="navbar navbar-inverse">
+			<div class="navbar-brand">Edit Customer</div>
+		</div>
+
+		<h:form id="MyForm">
+			<table class="table table-bordered ">
+				<tr>
+					<td width="150" valign="top"><h:outputLabel
+							value="Customer ID" for="Id" /></td>
+
+					<td valign="bottom"><h:outputLabel id="Id"
+							value="#{customerController.customer.customerId}">
+						</h:outputLabel></td>
+				</tr>
+
+				<tr>
+					<td><h:outputLabel value="Customer Name" for="customerName" /></td>
+					<td><h:inputText id="customerName"
+							value="#{customerController.customerDTO.customerName}"
+							title="CustomerName" required="true"
+							requiredMessage="Please enter the customer name">
+						</h:inputText> <br /> <h:message for="customerName"
+							class="#{!customerName.valid ? 'label label-warning' : 'none'}" />
+					</td>
+				</tr>
+
+				<tr>
+					<td><h:outputLabel value="Industry Type" for="industryType" /></td>
+					<td><h:inputText id="industryType"
+							value="#{customerController.customerDTO.industryType}"
+							title="IndustryType" required="true"
+							requiredMessage="Please enter the industry type">
+
+						</h:inputText> <br /> <h:message for="industryType"
+							class="#{!industryType.valid ? 'label label-warning' : 'none'}" />
+					</td>
+				</tr>
+
+				<tr class="#{!streetNumber.valid ? 'has-error' : 'none'}">
+					<td><h:outputLabel value="Street Number" for="streetNumber" /></td>
+					<td><h:inputText id="streetNumber"
+							value="#{customerController.customerDTO.streetNumber}"
+							title="streetNumber" required="true"
+							requiredMessage="Please enter the street number!"
+							converterMessage="Please enter a number">
+							<f:convertNumber integerOnly="true" />
+						</h:inputText> <br /> <h:message for="streetNumber"
+							class="#{!streetNumber.valid ? 'label label-warning' : 'none'}" />
+					</td>
+				</tr>
+
+				<tr class="#{!streetAddress.valid ? 'has-error' : 'none'}">
+					<td><h:outputLabel value="Street Address" for="streetAddress" /></td>
+					<td><h:inputText id="streetAddress"
+							value="#{customerController.customerDTO.streetAddress}"
+							title="streetAddress" required="true"
+							requiredMessage="Please enter the street address!">
+						</h:inputText> <br /> <h:message for="streetAddress"
+							class="#{!streetAddress.valid ? 'label label-warning' : 'none'}" />
+					</td>
+				</tr>
+
+				<tr class="#{!suburb.valid ? 'has-error' : 'none'}">
+					<td><h:outputLabel value="Suburb" for="suburb" /></td>
+					<td><h:inputText id="suburb"
+							value="#{customerController.customerDTO.suburb}" title="suburb"
+							required="true" requiredMessage="Please enter the suburb!">
+						</h:inputText> <br /> <h:message for="suburb"
+							class="#{!suburb.valid ? 'label label-warning' : 'none'}" /></td>
+				</tr>
+
+				<tr class="#{!state.valid ? 'has-error' : 'none'}">
+					<td><h:outputLabel value="State" for="state" /></td>
+					<td><h:inputText id="state"
+							value="#{customerController.customerDTO.state}" title="state"
+							size="3" required="true"
+							requiredMessage="Please enter the state!">
+						</h:inputText> <br /> <h:message for="state"
+							class="#{!state.valid ? 'label label-warning' : 'none'}" /></td>
+				</tr>
+
+				<tr class="#{!postcode.valid ? 'has-error' : 'none'}">
+					<td><h:outputLabel value="Postcode" for="postcode" /></td>
+					<td><h:inputText id="postcode"
+							value="#{customerController.customerDTO.postcode}"
+							title="postcode" required="true"
+							requiredMessage="Please enter the postcode!"
+							validatorMessage="Please enter a postcode between 0200 and 4700"
+							converterMessage="Please enter a number">
+							<f:convertNumber integerOnly="true" />
+							<f:validateLongRange minimum="200" maximum="4700" />
+						</h:inputText> <br /> <h:message for="postcode"
+							class="#{!postcode.valid ? 'label label-warning' : 'none'}" /></td>
+				</tr>
+				
+				<tr>
+					<td><h:outputLabel
+							value="Connect User" for="connectUser" /></td>
+					<td ><h:outputLabel id="connectUser"
+							value="#{customerController.customer.connectUser.username}">
+						</h:outputLabel></td>
+				</tr>
+
+			</table>
+
+			<table class="table table-bordered table-striped">
+
+				<tr>
+					<td><h:outputLabel id="ContactId" value="Contact Id" /></td>
+
+					<td><h:outputLabel id="ContactTitle" value="Contact Title" /></td>
+
+					<td><h:outputLabel id="ContactName" value="Contact Name" /></td>
+
+					<td><h:outputLabel id="ContactPhone"
+							value="Contact Phone Number" /></td>
+
+					<td><h:outputLabel id="ContactEmail" value="Contact Email" /></td>
+
+					<td><h:outputLabel id="Actions" value="Actions" /></td>
+				</tr>
+
+				<ui:repeat id="Myrepeat" value="#{contactController.contacts}"
+					var="contact" varStatus="status">
+					<tr
+						onclick="document.getElementById('MyForm:principle').value = document.getElementById('MyForm:Myrepeat:#{status.index}:outPrice').textContent">
+						<td><h:outputText id="contactId"
+								value="#{contactController.contacts.get(status.index).contactId}" />
+						</td>
+
+						<td><h:outputText id="contactTitle"
+								value="#{contactController.contacts.get(status.index).title.toString()}" />
+						</td>
+
+						<td><h:outputText id="contactName"
+								value="#{contactController.contacts.get(status.index).contactName}" />
+						</td>
+
+						<td><h:outputText id="contactPhoneNumber"
+								value="#{contactController.contacts.get(status.index).contactPhoneNumber}" />
+						</td>
+
+						<td><h:outputText id="contactEmail"
+								value="#{contactController.contacts.get(status.index).contactEmail}" />
+						</td>
+
+						<td><h:commandButton id="editContact" value="Edit"
+								action="/user/editcontact.xhtml"
+								disabled="#{contactController.contacts.get(status.index).contactId == null}"
+								class="btn btn-primary">
+								<f:param name="customerId"
+									value="#{customerController.customer.customerId}" />
+								<f:param name="contactId"
+									value="#{contactController.contacts.get(status.index).contactId}" />
+							</h:commandButton> <h:outputText value=" " /> <h:commandButton id="deleteContact"
+								value="Delete"
+								action="#{contactController.removeContact(contactController.contacts.get(status.index).contactId)}"
+								disabled="#{contactController.contacts.get(status.index).contactId == null}"
+								class="btn btn-primary">
+								<f:param name="customerId"
+									value="#{customerController.customer.customerId}" />
+							</h:commandButton> <h:outputText value=" " /></td>
+					</tr>
+				</ui:repeat>
+			</table>
+			<h:commandButton id="submit" value="Save"
+				action="#{customerController.updateCustomer(customerController.customerDTO)}"
+				class="btn btn-primary">
+				<f:param name="customerId"
+					value="#{customerController.customer.customerId}" />
+			</h:commandButton>
+
+			<h:outputText value=" " />
+
+			<h:commandButton id="add" value="Add Contact"
+				action="/user/addcontact.xhtml" class="btn btn-primary">
+				<f:param name="customerId"
+					value="#{customerController.customer.customerId}" />
+			</h:commandButton>
+			
+			<h:outputText value=" " />
+
+			<h:commandButton id="assignUser" value="Assign Connect User"
+				action="/admin/assignuser.xhtml" 
+				disabled="#{not loginManagedBean.isAdmin()}"
+				class="btn btn-primary">
+				<f:param name="customerId"
+					value="#{customerController.customer.customerId}" />
+			</h:commandButton>
+
+			<h:outputText value=" " />
+
+			<h:link id="close" value="Close" outcome="/user/index.xhtml"
+				class="btn btn-primary" />
+		</h:form>
+	</div>
+</h:body>
+</html>

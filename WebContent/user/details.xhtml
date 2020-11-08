@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<title>Customer Details</title>
+</h:head>
+
+<h:body>
+	<div class="container">
+		<div class="navbar navbar-inverse">
+			<div class="navbar-brand">Customer Details</div>
+		</div>
+
+		<h:form id="MyDetailsForm">
+			<table class="table table-bordered ">
+				<tr>
+					<td width="150" valign="top">Customer Id</td>
+
+					<td valign="bottom"><h:outputLabel id="CustomerId">#{customerController.customer.customerId}</h:outputLabel>
+					</td>
+				</tr>
+
+				<tr>
+					<td width="150" valign="top">Customer Name</td>
+
+					<td valign="bottom"><h:outputLabel id="CustomerName">#{customerController.customer.customerName}</h:outputLabel>
+					</td>
+				</tr>
+
+				<tr>
+					<td width="150" valign="top">Industry Type</td>
+
+					<td valign="bottom"><h:outputLabel id="IndustryType">#{customerController.customer.industryType.toString()}</h:outputLabel>
+					</td>
+				</tr>
+
+				<tr>
+					<td width="150" valign="top">Address</td>
+
+					<td valign="bottom"><h:outputLabel id="Address">#{customerController.customer.address.toString()}</h:outputLabel>
+					</td>
+				</tr>
+				
+				<tr>
+					<td width="150" valign="top">Connect User</td>
+
+					<td valign="bottom"><h:outputLabel id="ConnectUser">#{customerController.customer.connectUser.username}</h:outputLabel>
+					</td>
+				</tr>
+
+			</table>
+			
+			<br/>
+			<h:outputLabel value="Contact Information" />
+
+			<table class="table table-bordered table-striped">
+
+				<tr>
+					<td><h:outputLabel id="ContactId" value="Contact Id" /></td>
+
+					<td><h:outputLabel id="ContactTitle" value="Contact Title" /></td>
+
+					<td><h:outputLabel id="ContactName" value="Contact Name" /></td>
+
+					<td><h:outputLabel id="ContactPhone" value="Contact Phone Number" /></td>
+
+					<td><h:outputLabel id="ContactEmail" value="Contact Email" /></td>
+					
+				
+				</tr>
+
+				<ui:repeat id="Myrepeat" value="#{contactController.contacts}"
+					var="contact" varStatus="status">
+					<tr
+						onclick="document.getElementById('MyForm:principle').value = document.getElementById('MyForm:Myrepeat:#{status.index}:outPrice').textContent">
+						<td><h:outputText id="contactId"
+								value="#{contactController.contacts.get(status.index).contactId}" />
+						</td>
+
+						<td><h:outputText id="contactTitle"
+								value="#{contactController.contacts.get(status.index).title.toString()}" />
+						</td>
+
+						<td><h:outputText id="contactName"
+								value="#{contactController.contacts.get(status.index).contactName}" />
+						</td>
+
+						<td><h:outputText id="contactPhoneNumber"
+								value="#{contactController.contacts.get(status.index).contactPhoneNumber}" />
+						</td>
+
+						<td><h:outputText id="contactEmail"
+								value="#{contactController.contacts.get(status.index).contactEmail}" />
+						</td>
+
+					</tr>
+				</ui:repeat>
+			</table>
+			<div>
+				<h:commandButton id="edit"
+					value="Edit" 
+                    action="/user/edit.xhtml" 
+                    disabled="#{customerController.customer.customerId == null || not customerController.isAllowedToEdit(customerController.customer)}"
+                    class="btn btn-primary">
+                    <f:param name="customerId" value="#{customerController.customer.customerId}"/>
+                </h:commandButton>
+				
+				<h:outputText value="  "/>
+				<h:link id="close" value="Close" outcome="/user/index.xhtml"
+					class="btn btn-primary" />
+			</div>
+			<br/>
+			<div>				
+				<h:outputText value=" Contact ID: "/>
+				<h:inputText id="searchContactId"
+						value="#{contactController.searchContactId}"
+						title="searchContact"
+						converterMessage="Please enter a number"
+						validatorMessage="Please enter a contact ID greater than 1">
+						<f:convertNumber integerOnly="true" />
+						<f:validateLongRange minimum="1" />
+				</h:inputText>
+				<h:outputText value="  "/>
+								
+				<h:commandButton id="searchContact" 
+					value="Search Contact" 
+					action="#{searchController.searchByContactIdInDetails(contactController.searchContactId)}"
+					class="btn btn-primary" >
+					<f:param name="customerId" value="#{customerController.customer.customerId}"/>
+				</h:commandButton>
+				<h:outputText value="  "/>
+				<h:outputText value="#{searchController.contactSearchResult}"/>
+			</div>
+
+			
+		</h:form>
+	</div>
+</h:body>
+</html>

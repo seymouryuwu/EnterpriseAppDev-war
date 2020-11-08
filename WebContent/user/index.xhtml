@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<title>Welcome Page</title>
+</h:head>
+
+<h:body>
+	<div class="container">
+		<div class="navbar navbar-inverse">
+			<div class="navbar-brand">Customer List</div>
+		</div>
+
+		<h:form id="MyIndexForm">
+			<table class="table table-bordered table-striped">
+				
+				<tr>
+					<td><h:outputLabel id="Id" value="Id" /></td>
+
+					<td><h:outputLabel id="Name" value="Name" /></td>
+
+					<td><h:outputLabel id="IndustryType" value="Industry Type" /></td>
+					
+					<td><h:outputLabel id="Address" value="Address" /></td>
+					
+					<td><h:outputLabel id="ConnectUser" value="Connect User" /></td>
+					
+					<td><h:outputLabel id="Actions" value="Actions" /></td>
+				</tr>
+
+				<ui:repeat id="Myrepeat" value="#{customerController.customers}"
+					var="customer" varStatus="status">
+					<tr
+						onclick="document.getElementById('MyForm:principle').value = document.getElementById('MyForm:Myrepeat:#{status.index}:outPrice').textContent">
+						<td><h:outputText id="customerId"
+								value="#{customerController.customers.get(status.index).customerId}" />
+						</td>
+
+						<td><h:outputText id="customerName"
+								value="#{customerController.customers.get(status.index).customerName}" />
+						</td>
+
+						<td><h:outputText id="customerIndustryType"
+								value="#{customerController.customers.get(status.index).industryType.toString()}" />
+						</td>
+						
+						<td><h:outputText id="address"
+								value="#{customerController.customers.get(status.index).address.toString()}" />
+						</td>
+						
+						<td><h:outputText id="connectUser"
+								value="#{customerController.customers.get(status.index).connectUser.username}" />
+						</td>
+						
+						<td>
+							<h:commandButton id="viewCustomer"
+								value="View" 
+                            	action="/user/details.xhtml" 
+                            	disabled="#{customerController.customers.get(status.index).customerId == null}"
+                            	class="btn btn-primary">
+                            	<f:param name="customerId" value="#{customerController.customers.get(status.index).customerId}"/>
+                            </h:commandButton>
+                            
+                            <h:outputText value=" "/>
+
+                            <h:commandButton id="editCustomer"
+								value="Edit" 
+                            	action="/user/edit.xhtml" 
+                            	disabled="#{customerController.customers.get(status.index).customerId == null || not customerController.isAllowedToEdit(customerController.customers.get(status.index))}"
+                            	class="btn btn-primary">
+                            	<f:param name="customerId" value="#{customerController.customers.get(status.index).customerId}"/>
+                            </h:commandButton>
+                            
+                            <h:outputText value=" "/>
+                                
+                            <h:commandButton id="deleteCustomer"
+                            	value="Delete" 
+                            	action="#{customerController.removeCustomer(customerController.customers.get(status.index).customerId)}" 
+                            	disabled="#{customerController.customers.get(status.index).customerId == null}"
+                            	class="btn btn-primary">
+                            </h:commandButton>
+                                    
+                            <h:outputText value=" "/>
+                        </td>
+					</tr>
+				</ui:repeat>
+			</table>
+
+			<div>
+				
+				<h:commandButton id="add" value="Add Customer" action="/user/add.xhtml"
+					class="btn btn-primary" />
+				<h:outputText value=" "/>
+				
+				<h:commandButton id="manageUser" value="Manage User" action="/admin/userlist.xhtml"
+					disabled="#{not loginManagedBean.isAdmin()}"
+					class="btn btn-primary" />
+				<h:outputText value=" "/>
+			</div>
+			<br/>
+			<div>
+				<h:outputText value=" Customer ID: "/>
+				<h:inputText id="searchCustomerId"
+						value="#{customerController.searchCustomerId}"
+						title="searchCustomer"
+						converterMessage="Please enter a number"
+						validatorMessage="Please enter a customer ID greater than 1">
+						<f:convertNumber integerOnly="true" />
+						<f:validateLongRange minimum="1" />
+				</h:inputText>
+				<h:outputText value="  "/>
+								
+				<h:commandButton id="searchCustomer" 
+					value="Search Customer" 
+					action="#{searchController.searchByCustomerId(customerController.searchCustomerId)}"
+					class="btn btn-primary" >
+				</h:commandButton>
+				<h:outputText value="  "/>
+				<h:outputText value="#{searchController.customerSearchResult}"/>
+				
+				<br/>
+				<br/>
+				
+				<h:outputText value=" Contact ID: "/>
+				<h:inputText id="searchContactId"
+						value="#{contactController.searchContactId}"
+						title="searchContact"
+						converterMessage="Please enter a number"
+						validatorMessage="Please enter a contact ID greater than 1">
+						<f:convertNumber integerOnly="true" />
+						<f:validateLongRange minimum="1" />
+				</h:inputText>
+				<h:outputText value="  "/>
+								
+				<h:commandButton id="searchContact" 
+					value="Search Contact" 
+					action="#{searchController.searchByContactId(contactController.searchContactId)}"
+					class="btn btn-primary" >
+				</h:commandButton>
+				<h:outputText value="  "/>
+				<h:outputText value="#{searchController.contactSearchResult}"/>
+			</div>
+			<br/>
+			<div>
+				<h:commandButton id="logout" value="Logout" action="#{loginManagedBean.logout()}"
+					class="btn btn-primary" />
+				<h:outputText value=" "/>
+				<h:link value="Change Password" outcome="/user/changepassword.xhtml"
+					class="btn btn-primary" />
+			</div>
+
+		</h:form>
+	</div>
+</h:body>
+
+</html>

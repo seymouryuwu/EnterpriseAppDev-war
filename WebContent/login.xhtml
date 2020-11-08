@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<title>Log in</title>
+</h:head>
+<h:body>
+	<div class="navbar navbar-inverse">
+		<div class="navbar-brand">Please Log in</div>
+	</div>
+	<h:form>
+		<h:panelGrid columns="2">
+			<h:outputLabel value="Username  " for="username"></h:outputLabel>
+			<h:inputText id="username" 
+				value="#{loginManagedBean.username}" 
+				required="true"
+				requiredMessage="Please enter your username" 
+				maxlength="30">
+			</h:inputText>
+			
+			<h:outputLabel value="Password  " for="password"></h:outputLabel>
+			<h:inputSecret id="password" 
+				value="#{loginManagedBean.password}"
+				required="true" 
+				requiredMessage="Please enter password">
+			</h:inputSecret>
+		
+			<h:commandButton action="#{loginManagedBean.login()}" value="Submit"
+				class="btn btn-primary" />
+		</h:panelGrid>
+	</h:form>
+	<br />
+	<br />
+	<h:link value="Create a new account" outcome="/signup.xhtml" />
+</h:body>
+</html>
