@@ -82,7 +82,7 @@
                             <h:commandButton id="deleteCustomer"
                             	value="Delete" 
                             	action="#{customerController.removeCustomer(customerController.customers.get(status.index).customerId)}" 
-                            	disabled="#{customerController.customers.get(status.index).customerId == null}"
+                            	disabled="#{customerController.customers.get(status.index).customerId == null || not customerController.isAllowedToEdit(customerController.customers.get(status.index))}"
                             	class="btn btn-primary">
                             </h:commandButton>
                                     

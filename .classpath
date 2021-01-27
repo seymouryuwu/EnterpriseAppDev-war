@@ -20,6 +20,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/WUYU/eclipse-workspace/W1ExeStudent-common/lib/javaee-api-7.0.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Assignment-common"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EnterpriseAppDev-common"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
